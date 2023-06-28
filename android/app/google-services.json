@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "567146583861",
+    "project_id": "taskmanager-5f76b",
+    "storage_bucket": "taskmanager-5f76b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567146583861:android:40ab1b41abdb293abb5e7c",
+        "android_client_info": {
+          "package_name": "com.neto.alvaro.task_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567146583861-e3bf0fpt9v3uit8f8co30ttasb7a2o7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDotEqXi36uKhuqGI1FehgQIC6O_DzU_BY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567146583861-e3bf0fpt9v3uit8f8co30ttasb7a2o7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

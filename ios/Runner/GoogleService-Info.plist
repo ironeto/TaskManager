@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>567146583861-h2t0e5cgoebbndnk7ouse67iae0b52p3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.567146583861-h2t0e5cgoebbndnk7ouse67iae0b52p3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCJQwdp6sxsK17a9o9SNipWAowNZ9a2F2c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>567146583861</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.neto.alvaro.taskManager</string>
+	<key>PROJECT_ID</key>
+	<string>taskmanager-5f76b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>taskmanager-5f76b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:567146583861:ios:caee4bfc2be7ee86bb5e7c</string>
+</dict>
+</plist>
