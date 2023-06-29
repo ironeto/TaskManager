@@ -27,12 +27,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
       ),
       body: Consumer<TasksProvider>(
         builder: (context, tasksProvider, _) {
-          return Column(
-            children: [
-              TaskList(),
-              GenericOverviewCard<IGenericOverviewCard>(labelForCounter:'Total de Horas'),
-            ],
-          );
+          return TaskList();
         },
       ),
       floatingActionButton: FloatingActionButton(
