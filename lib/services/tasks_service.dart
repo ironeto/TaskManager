@@ -1,13 +1,14 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:http/http.dart';
-
 import '../repositories/tasks_repository.dart';
 
 class TasksService {
-  final TasksRepository _tasksRepository = TasksRepository();
+  final TasksRepository _tasksRepository;
+
+  TasksService({TasksRepository? tasksRepository})
+      : _tasksRepository = tasksRepository ?? TasksRepository();
 
   Future<List<TaskModel>> list() async {
     try {
@@ -25,7 +26,7 @@ class TasksService {
 
   Future insert(TaskModel task) async {
     try {
-      final response = await _tasksRepository.insert(task.id,task.toJson());
+      final response = await _tasksRepository.insert(task.id, task.toJson());
     } catch (err) {
       throw Exception("Problemas ao inserir a tarefa.");
     }

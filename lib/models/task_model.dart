@@ -21,8 +21,9 @@ class TaskModel {
         effortHours = json['effortHours'],
         latitude = json['latitude'],
         longitude = json['longitude'],
-        date = json['date'].toDate(),
+        date = DateTime.parse(json['date'].toString()),  // Explicit conversion to string
         imageName = json['imageName'];
+
 
   Map<String, dynamic> toJson() => {
     'name': name,
