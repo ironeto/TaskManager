@@ -2,13 +2,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 
 import '../models/weather_forecast.dart';
 
 class WeatherForecastComponent extends StatefulWidget {
   final Position position;
+  final VoidCallback? onComplete;
+  final http.Client? httpClient;
 
-  const WeatherForecastComponent({required this.position});
+  const WeatherForecastComponent({
+    required this.position,
+    this.onComplete,
+    this.httpClient,
+  });
 
   @override
   _WeatherForecastComponentState createState() =>
@@ -22,8 +29,7 @@ class _WeatherForecastComponentState extends State<WeatherForecastComponent> {
   late double longitude;
 
   Future<WeatherForecastModel> fetchWeatherForecast() async {
-    if (widget?.position?.latitude == null ||
-        widget?.position?.longitude == null) {
+    if (widget.position.latitude == null || widget.position.longitude == null) {
       latitude = 0;
       longitude = 0;
     } else {
@@ -34,10 +40,17 @@ class _WeatherForecastComponentState extends State<WeatherForecastComponent> {
     final String apiUrl =
         'http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$latitude,$longitude&aqi=no';
 
-    final response = await http.get(Uri.parse(apiUrl));
+    late Response? response;
 
-    if (response.statusCode == 200) {
-      final data = WeatherForecastModel.fromJson(json.decode(response.body));
+    if(widget.httpClient == null) {
+      response = await http.get(Uri.parse(apiUrl));
+    } else {
+      response = await widget.httpClient?.get(Uri.parse(apiUrl));
+    }
+
+    if (response?.statusCode == 200) {
+      final data = WeatherForecastModel.fromJson(json.decode(response!.body));
+      if (widget.onComplete != null) widget.onComplete!();
       return data;
     } else {
       throw Exception('Failed to fetch weather forecast');
