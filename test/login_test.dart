@@ -43,50 +43,50 @@ void main() {
     mockFirebaseAuth = MockFirebaseAuth();
   });
 
-  testWidgets('Test successful login', (WidgetTester tester) async {
+  group('Login Tests', () {
+    testWidgets('Test successful login', (WidgetTester tester) async {
+      signInScreen = SignInScreen(onSignedIn: () => didSignIn = true, auth: MockFirebaseAuth());
 
-    signInScreen = SignInScreen(onSignedIn: () => didSignIn = true, auth: MockFirebaseAuth());
+      // Pump the SignInScreen widget
+      await tester.pumpWidget(
+        MaterialApp(
+          home: signInScreen,
+        ),
+      );
 
-    // Pump the SignInScreen widget
-    await tester.pumpWidget(
-      MaterialApp(
-        home: signInScreen,
-      ),
-    );
+      // Enter text in email and password fields
+      await tester.enterText(find.byKey(const Key('emailField')), 'ironeto@hotmail.com');
+      await tester.enterText(find.byKey(const Key('passwordField')), 'teste@12');
 
-    // Enter text in email and password fields
-    await tester.enterText(find.byKey(const Key('emailField')), 'ironeto@hotmail.com');
-    await tester.enterText(find.byKey(const Key('passwordField')), 'teste@12');
+      didSignIn = false;
 
-    didSignIn = false;
+      // Tap the login button
+      await tester.tap(find.byKey(const Key('loginButton')));
 
-    // Tap the login button
-    await tester.tap(find.byKey(const Key('loginButton')));
+      expect(didSignIn, true);
+    });
 
-    expect(didSignIn, true);
-  });
+    testWidgets('Test login failure', (WidgetTester tester) async {
+      signInScreen = SignInScreen(onSignedIn: () => didSignIn = true, auth: MockFirebaseFailAuth());
 
-  testWidgets('Test login failure', (WidgetTester tester) async {
+      // Pump the SignInScreen widget
+      await tester.pumpWidget(
+        MaterialApp(
+          home: signInScreen,
+        ),
+      );
 
-    signInScreen = SignInScreen(onSignedIn: () => didSignIn = true, auth: MockFirebaseFailAuth());
+      // Enter text in email and password fields
+      await tester.enterText(find.byKey(const Key('emailField')), 'ironeto@hotmail.com');
+      await tester.enterText(find.byKey(const Key('passwordField')), 'teste@12');
 
-    // Pump the SignInScreen widget
-    await tester.pumpWidget(
-      MaterialApp(
-        home: signInScreen,
-      ),
-    );
+      didSignIn = false;
 
-    // Enter text in email and password fields
-    await tester.enterText(find.byKey(const Key('emailField')), 'ironeto@hotmail.com');
-    await tester.enterText(find.byKey(const Key('passwordField')), 'teste@12');
+      // Tap the login button
+      await tester.tap(find.byKey(const Key('loginButton')));
 
-    didSignIn = false;
-
-    // Tap the login button
-    await tester.tap(find.byKey(const Key('loginButton')));
-
-    expect(didSignIn, false);
+      expect(didSignIn, false);
+    });
   });
 }
 
