@@ -47,8 +47,8 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       );
 
-      // Navigator.of(context)
-      //     .pushReplacementNamed(RoutePaths.TASKS_LIST_SCREEN);
+      Navigator.of(context)
+          .pushReplacementNamed(RoutePaths.TASKS_LIST_SCREEN);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
