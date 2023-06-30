@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../components/weather_forecast.dart';
 import '../routes/route_paths.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -88,6 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
               onPressed: login,
               child: const Text("Login"),
             ),
+            WeatherForecastComponent(),
           ],
         ),
       ),
