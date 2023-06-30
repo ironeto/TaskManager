@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../components/weather_forecast.dart';
 import '../routes/route_paths.dart';
@@ -20,10 +21,18 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController =
-      TextEditingController(text: 'ironeto@hotmail.com');
+  TextEditingController(text: 'ironeto@hotmail.com');
   final TextEditingController passwordController =
-      TextEditingController(text: 'teste@12');
+  TextEditingController(text: 'teste@12');
   bool isLoading = false;
+
+  Future<Position>? positionFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    positionFuture = _getLocation();
+  }
 
   Future<void> login() async {
     setState(() {
@@ -61,6 +70,12 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  Future<Position> _getLocation() async {
+    return Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
   }
 
   @override
@@ -105,22 +120,47 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     isLoading
                         ? Align(
-                            alignment: Alignment.center,
-                            child: const CircularProgressIndicator())
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(),
+                    )
                         : Align(
-                            alignment: Alignment.center,
-                            child: ElevatedButton(
-                              key: const Key("loginButton"),
-                              onPressed: login,
-                              child: const Text("Login"),
-                            ),
-                          ),
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        key: const Key("loginButton"),
+                        onPressed: login,
+                        child: const Text("Login"),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-          WeatherForecastComponent(),
+          FutureBuilder<Position>(
+            future: positionFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final position = snapshot.data;
+                return WeatherForecastComponent(
+                  position: position ??
+                      Position(
+                        longitude: 0,
+                        latitude: 0,
+                        timestamp: DateTime.now(),
+                        accuracy: 1,
+                        altitude: 1,
+                        heading: 1,
+                        speed: 1,
+                        speedAccuracy: 1,
+                      ),
+                );
+              }
+            },
+          ),
         ],
       ),
     );

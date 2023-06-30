@@ -6,34 +6,29 @@ import 'package:geolocator/geolocator.dart';
 import '../models/weather_forecast.dart';
 
 class WeatherForecastComponent extends StatefulWidget {
+  final Position position;
+
+  const WeatherForecastComponent({required this.position});
+
   @override
   _WeatherForecastComponentState createState() =>
       _WeatherForecastComponentState();
 }
 
 class _WeatherForecastComponentState extends State<WeatherForecastComponent> {
-  final String apiKey = '1919fcb13b6e4c96957161302233006'; // Replace with your API key
+  final String apiKey =
+      '1919fcb13b6e4c96957161302233006'; // Replace with your API key
   late double latitude;
   late double longitude;
 
-  @override
-  void initState() {
-    super.initState();
-    _getLocation();
-  }
-
-  Future<void> _getLocation() async {
-    final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      latitude = position.latitude;
-      longitude = position.longitude;
-    });
-  }
-
   Future<WeatherForecastModel> fetchWeatherForecast() async {
-    if (latitude == null || longitude == null) {
-      throw Exception('Failed to get location');
+    if (widget?.position?.latitude == null ||
+        widget?.position?.longitude == null) {
+      latitude = 0;
+      longitude = 0;
+    } else {
+      latitude = widget.position.latitude;
+      longitude = widget.position.longitude;
     }
 
     final String apiUrl =
@@ -63,7 +58,8 @@ class _WeatherForecastComponentState extends State<WeatherForecastComponent> {
               Text(
                 'Temperature: ${weatherForecast.current?.tempC?.toStringAsFixed(2) ?? ""}°C',
               ),
-              Text('Weather Condition: ${weatherForecast.current?.condition?.text ?? ""}'),
+              Text(
+                  'Weather Condition: ${weatherForecast.current?.condition?.text ?? ""}'),
               if (weatherForecast.current?.condition?.icon != null)
                 Image.network(
                   'https:${weatherForecast.current!.condition!.icon}',
