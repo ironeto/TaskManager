@@ -6,40 +6,58 @@ import 'package:flutter/material.dart';
 import '../routes/route_paths.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key});
+  const SignInScreen({Key? key, this.onSignedIn, FirebaseAuth? auth})
+      : auth = auth ?? FirebaseAuth.instance,
+        super(key: key);
+
+  final VoidCallback? onSignedIn;
+  final FirebaseAuth auth;
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController emailController = TextEditingController(text: 'ironeto@hotmail.com');
-  final TextEditingController passwordController = TextEditingController(text: 'teste@12');
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final TextEditingController emailController =
+  TextEditingController(text: 'ironeto@hotmail.com');
+  final TextEditingController passwordController =
+  TextEditingController(text: 'teste@12');
   bool isLoading = false;
 
   Future<void> login() async {
     setState(() {
       isLoading = true;
     });
+
     String email = emailController.text;
     String password = passwordController.text;
+
     try {
-      final user = await auth.signInWithEmailAndPassword(
+      final user = await widget.auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Usuário autenticado."),
-        duration: Duration(seconds: 2),
-      ));
-      Navigator.of(context).pushReplacementNamed(RoutePaths.TASKS_LIST_SCREEN);
+
+      if (widget.onSignedIn != null) widget.onSignedIn!();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Usuário autenticado."),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      // Navigator.of(context)
+      //     .pushReplacementNamed(RoutePaths.TASKS_LIST_SCREEN);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("${e}"),
-        duration: Duration(seconds: 2),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Falha ao autenticar"),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
+
     setState(() {
       isLoading = false;
     });
@@ -53,10 +71,12 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Column(
           children: [
             TextField(
+              key: const Key("emailField"),
               controller: emailController,
               decoration: const InputDecoration(labelText: "e-mail"),
             ),
             TextField(
+              key: const Key("passwordField"),
               controller: passwordController,
               obscureText: true,
               decoration: const InputDecoration(labelText: "senha"),
@@ -64,9 +84,8 @@ class _SignInScreenState extends State<SignInScreen> {
             isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-              onPressed: () => {
-                login()
-              },
+              key: const Key("loginButton"),
+              onPressed: login,
               child: const Text("Login"),
             ),
           ],

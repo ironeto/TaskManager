@@ -15,7 +15,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final provider = Provider.of<TasksProvider>(context, listen: false);
+    final provider = Provider.of<TasksProvider>(context);
     List<Widget> _generateListTasks(List<TaskModel> tasks) {
       return tasks.map((tasks) => TaskListItem(tasks)).toList();
     }

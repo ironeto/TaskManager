@@ -10,9 +10,7 @@ class TasksProvider extends ChangeNotifier implements IGenericOverviewCard {
   final TasksService taskService = TasksService();
   List<TaskModel> itens = [];
   Future<List<TaskModel>> list() async {
-    if (itens.isEmpty) {
-      itens = await taskService.list();
-    }
+    itens = await taskService.list();
     return itens;
   }
 
