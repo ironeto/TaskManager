@@ -20,9 +20,9 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController =
-  TextEditingController(text: 'ironeto@hotmail.com');
+      TextEditingController(text: 'ironeto@hotmail.com');
   final TextEditingController passwordController =
-  TextEditingController(text: 'teste@12');
+      TextEditingController(text: 'teste@12');
   bool isLoading = false;
 
   Future<void> login() async {
@@ -48,8 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       );
 
-      Navigator.of(context)
-          .pushReplacementNamed(RoutePaths.TASKS_LIST_SCREEN);
+      Navigator.of(context).pushReplacementNamed(RoutePaths.TASKS_LIST_SCREEN);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -67,31 +66,62 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(50.0),
-        child: Column(
+      appBar: AppBar(
+        title: Row(
           children: [
-            TextField(
-              key: const Key("emailField"),
-              controller: emailController,
-              decoration: const InputDecoration(labelText: "e-mail"),
+            Icon(Icons.assignment),
+            SizedBox(width: 10),
+            Text(
+              'Gerenciador de Tarefas',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            TextField(
-              key: const Key("passwordField"),
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "senha"),
-            ),
-            isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-              key: const Key("loginButton"),
-              onPressed: login,
-              child: const Text("Login"),
-            ),
-            WeatherForecastComponent(),
           ],
         ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      key: const Key("emailField"),
+                      controller: emailController,
+                      decoration: const InputDecoration(labelText: "e-mail"),
+                    ),
+                    TextField(
+                      key: const Key("passwordField"),
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(labelText: "senha"),
+                    ),
+                    isLoading
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: const CircularProgressIndicator())
+                        : Align(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              key: const Key("loginButton"),
+                              onPressed: login,
+                              child: const Text("Login"),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          WeatherForecastComponent(),
+        ],
       ),
     );
   }
