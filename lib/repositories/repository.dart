@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:http/http.dart' as http;
 
 abstract class BaseFirebaseFireStoreRepository {
-  final db = FirebaseFirestore.instance;
+
+  var db = FirebaseFirestore.instance;
   // final _baseUrl = "https://dmcflutter23t2-default-rtdb.firebaseio.com/";
-  final String _collection; // collection
+  String _collection; // collection
   // final auth = FirebaseAuth.instance;
+
+  set dbFireStore(FirebaseFirestore db) {
+    this.db = db;
+  }
 
   BaseFirebaseFireStoreRepository(this._collection);
 
