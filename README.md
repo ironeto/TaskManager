@@ -13,7 +13,9 @@ Professor: Thiago Vieira de Aguiar
 ## Testes:
 
 Para testar as soluções firebase, faça login, crie, altere e exclua tarefas.
+
 Para testar o consumo de API RESTful, verifique se o componente de Previsão do Tempo foi renderizado com sucesso na tela de login.
+
 Para testar o Package (plugin), verifique se o footer da lista (Total horas), está somando e renderizando corretamente.
 
 
